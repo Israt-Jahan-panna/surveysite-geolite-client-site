@@ -5,7 +5,7 @@ const Banner = () => {
     <div className="flex justify-between font-Barlow min-h-screen">
       <div className="w-1/3 bg-black">
         <div className=" text-white relative lg:w-[500px]">
-          <div className="container  py-10 text-center absolute top-[100px] lg:left-20 left-5 bg-black ">
+          <div className="container  py-10 text-center absolute lg:top-[100px] lg:left-20  bg-black ">
             <h2 className="lg:text-6xl font-bold mb-4">
               Best Land Surveying & <br /> Digital Mapping Service
             </h2>
