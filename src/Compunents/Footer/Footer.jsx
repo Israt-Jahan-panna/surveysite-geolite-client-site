@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div>
         <footer
-      className="relative bg-cover bg-center lg:h-screen  "
+      className="relative bg-cover bg-center lg:h-[500px] "
       style={{
         backgroundImage:
           'url("https://i.ibb.co/kS1WdDw/engineer-man-doing-topographic-measures-on-land-for-construction-work-during-coronavirus-outbreak-e1.jpg")',
@@ -13,7 +13,7 @@ const Footer = () => {
         
       <div className="absolute inset-0 bg-black opacity-75"> </div>
      
-      <div className="container mx-auto px-14 py-12 relative z-10">
+      <div className="container mx-auto lg:px-14 lg:py-20   p-5 relative z-10 ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 text-white">
           <div className="mb-8">
             <h4 className="text-2xl font-bold mb-4">Quick Links</h4>
@@ -52,16 +52,20 @@ const Footer = () => {
             <p>(+62) 81 115 3568</p>
           </div>
         </div>
-        <div className="flex items-center justify-center mt-8">
+        <div className="flex items-center justify-center mt-8 mb-2">
           <div className="flex space-x-4">
-            <i className="jki-facebook-light"></i>
-            <i className="jki-twitter-light"></i>
+          <i className="fa-brands fa-facebook" style={{ color: '#ff6900' }}></i>
+          <i className="fa-brands fa-twitter" style={{ color: '#ff6900' }}></i>
+          <i className="fa-brands fa-linkedin" style={{ color: '#ff6900' }}></i>
+          <i className="fa-brands fa-google" style={{ color: '#ff6900' }}></i>
+          
             <i className="jki-instagram-1-light"></i>
             <i className="jki-linkedin-light"></i>
           </div>
         </div>
-        <div className="text-center mt-8 text-white">
-          <p>Copyright © 2022 Geolite Templatekit By Jegtheme.</p>
+        <hr />
+        <div className="text-center mt-2 text-white">
+          <p>Copyright © 2023 Geolite</p>
         </div>
       </div>
     </footer>
