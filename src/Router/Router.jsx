@@ -5,6 +5,8 @@ import Roots from "../Layout/Roots";
 import Home from "../Page/Home/Home";
 import ErrorPage from "../Page/ErrorPage/ErrorPage";
 import Login from "../Page/Login/Login";
+import Dashboard from "../Layout/Dashboard";
+import SurveyCreation from "../Page/SurveyCreation/SurveyCreation";
 
 
 
@@ -28,5 +30,15 @@ import Login from "../Page/Login/Login";
         }
     ]
     },
+    {
+      path: "dashboard",
+      element: <Dashboard></Dashboard>,
+      children:[
+        {
+          path:"surveycreation",
+          element:<SurveyCreation></SurveyCreation>
+        }
+      ]
+    }
   ]);
   export default router;

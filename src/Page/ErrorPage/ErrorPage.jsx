@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {
     return (
-        <div className="text-center mt-10" >
-        <Link to={"/"}><button className="bg-[#198754] hover:bg-[#20c997] text-white font-bold py-2 px-4 rounded " type="submit">
+        <div className="text-center mt-10 " >
+        <Link to={"/"}><button className="bg-[#eb5814] hover:bg-[#c95e20] text-white font-bold py-2 px-4 rounded mr-8 " type="submit">
                 Back TO Home 
+              </button></Link>
+        <Link to={"/dashboard"}><button className="bg-[#fea916] hover:bg-[#c95e20] text-white font-bold py-2 px-4 rounded " type="submit">
+                Dashboard
               </button></Link>
         <div>
     <div className='mx-auto w-1/3 flex justify-center items-center'>

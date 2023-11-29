@@ -111,6 +111,22 @@ const NavBar = () => {
               </NavLink>
             </a>
           </li>
+          <li>
+            <a className="text-lg  text-black hover:text-[#ff6900]" href="#">
+              <NavLink
+                to="/dashboard"
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? " hover:text-[#ff6900] underline"
+                    : ""
+                }
+              >
+               Dashboard
+              </NavLink>
+            </a>
+          </li>
          
             </ul>}
             
@@ -183,6 +199,23 @@ const NavBar = () => {
                 }
               >
                 Pricing
+              </NavLink>
+            </a>
+          </li>
+          
+          <li>
+            <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
+            <NavLink
+                to="/dashboard"
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? " hover:text-[#ff6900] underline"
+                    : ""
+                }
+              >
+               Dashboard
               </NavLink>
             </a>
           </li>
