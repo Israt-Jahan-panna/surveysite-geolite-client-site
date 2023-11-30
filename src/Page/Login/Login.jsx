@@ -89,7 +89,7 @@ const Login = () => {
   
           // Make a POST request to your server
           fetch(
-            "http://localhost:4200/users",
+            "https://geolite-server-site.vercel.app/users",
             {
               method: "POST",
               headers: {

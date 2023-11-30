@@ -1,7 +1,7 @@
 ## Geolite Survey:
 ## [ Geolite Survey Live link ](https://geolite-client-site.web.app/)
 
-## In this project we can psot for a job or hierd for company  . 
+## this project feature  . 
 Here Is 5 Feature  and functionalitis of this project:
 1. we can add survey of out project  . 
 2. We have a dashboard for access control and survey creation .
