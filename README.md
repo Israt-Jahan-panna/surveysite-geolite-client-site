@@ -1,8 +1,26 @@
-# React + Vite
+## Geolite Survey:
+## [ Geolite Survey Live link ](https://geolite-client-site.web.app/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## In this project we can psot for a job or hierd for company  . 
+Here Is 5 Feature  and functionalitis of this project:
+1. we can add survey of out project  . 
+2. We have a dashboard for access control and survey creation .
 
-Currently, two official plugins are available:
+3. WE can see our latest survey in our feture section .
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+4. We can vote liek and dilike or our choices survey.
+
+5. If we become a pro user we can take extra service advantage  .
+
+
+
+## [ github seversite ](https://github.com/programming-hero-web-course1/b8a12-server-side-Israt-Jahan-panna.git)
+## [ github clintsite link ]( https://github.com/programming-hero-web-course1/b8a12-client-side-Israt-Jahan-panna.git)
+
+
+
+
+
+## [ Client Side Private repo:](https://classroom.github.com/a/dn3l6UtS)(https://classroom.github.com/a/dn3l6UtS)
+
+## [ Server Side Private repo:](https://classroom.github.com/a/IduXNLmU)(https://classroom.github.com/a/IduXNLmU)
