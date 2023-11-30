@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 
 
@@ -11,6 +12,9 @@ const ContactUs = () => {
     }
   return (
     <div className="bg-[#d8a600]">
+        <Helmet>
+            <title>GEOLITE | CONTACT US</title>
+        </Helmet>
       <div className="container lg:py-4 mx-auto md:px-6 ">
         <section className="mb-32">
           <div className="flex justify-center ">
