@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -9,12 +10,16 @@ const Banner = () => {
             <h2 className="lg:text-6xl font-bold mb-4">
               Best Land Surveying & <br /> Digital Mapping Service
             </h2>
-            <button className="bg-[#ff6900] text-black p-1 lg:py-2 lg:px-6 rounded-full  focus:outline-none lg:mr-4 mb-2">
+           <Link to={"/contactus"}>
+           <button className="bg-[#ff6900] text-black p-1 lg:py-2 lg:px-6 rounded-full  focus:outline-none lg:mr-4 mb-2">
               CONTACT US
             </button>
-            <button className="bg-white text-black p-1 lg:py-2 lg:px-6 rounded-full hover:bg-gray-200 focus:outline-none">
-              WATCH INTRO
+           </Link>
+           <Link to={"/aboutus"}>
+           <button className="bg-white text-black p-1 lg:py-2 lg:px-6 rounded-full hover:bg-gray-200 focus:outline-none">
+              ABOUT US
             </button>
+           </Link>
           </div>
         </div>
       </div>

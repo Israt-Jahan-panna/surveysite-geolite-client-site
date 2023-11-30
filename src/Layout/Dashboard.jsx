@@ -3,9 +3,11 @@ import { NavLink, Outlet } from 'react-router-dom';
 import SurveyCreation from '../Page/SurveyCreation/SurveyCreation';
 
 const Dashboard = () => {
+  // TODO get isAdmin value from the database 
+  // const is Admin = true ;
   return (
     <div className="min-h-screen bg-black flex font-Barlow">
-      {/* Sidebar */}
+      {/*dashboard  Sidebar */}
       <div className="w-64 bg-[#ff6900]  ml-5  pt-10 ">
         <h1 className="text-2xl font-extrabold mb-4 w-64 px-8 text-black ">Surveyor Dashboard</h1>
         <ul className="px-8 text-lg ">

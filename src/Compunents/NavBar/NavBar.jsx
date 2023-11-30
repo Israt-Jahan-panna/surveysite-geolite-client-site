@@ -76,10 +76,6 @@ const NavBar = () => {
             </a>
           </li>
             
-       
-            
-		
-		
           <li>
             <a className="text-lg  text-black hover:text-[#ff6900]" href="#">
               <NavLink
@@ -112,6 +108,22 @@ const NavBar = () => {
               </NavLink>
             </a>
           </li>
+          <li>
+            <a className="text-lg  text-black hover:text-[#ff6900]" href="#">
+              <NavLink
+                to="/prouser"
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? " hover:text-[#ff6900] underline"
+                    : ""
+                }
+              >
+               Pro User
+              </NavLink>
+            </a>
+          </li>
          
             </ul>}
             
@@ -121,7 +133,7 @@ const NavBar = () => {
         <div className="navbar hidden lg:flex items-center">
           <ul className="gap-10 menu-horizontal ">
           <li>
-            <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
+            <a className="text-lg font-bold w-10 text-black hover:text-[#ff6900]" href="#">
               <NavLink
                 to="/"
                 className={({ isActive, isPending }) =>
@@ -138,7 +150,7 @@ const NavBar = () => {
           </li>
           
           <li>
-            <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
+            <a className="text-lg font-bold text-black hover:text-[#ff6900]" href="#">
               <NavLink
                 to="/surveys"
                 className={({ isActive, isPending }) =>
@@ -157,7 +169,7 @@ const NavBar = () => {
          
           
           <li>
-            <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
+            <a className="text-lg font-bold text-black hover:text-[#ff6900]" href="#">
               <NavLink
                 to="/pricing"
                 className={({ isActive, isPending }) =>
@@ -172,9 +184,9 @@ const NavBar = () => {
               </NavLink>
             </a>
           </li>
-          
+
           <li>
-            <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
+            <a className="text-lg font-bold text-black hover:text-[#ff6900]" href="#">
             <NavLink
                 to="/dashboard"
                 className={({ isActive, isPending }) =>
@@ -189,9 +201,23 @@ const NavBar = () => {
               </NavLink>
             </a>
           </li>
-          
-            
-          
+          <li>
+            <a className="text-lg font-bold text-black hover:text-[#ff6900]" href="#">
+              <NavLink
+                to="/prouser"
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? " hover:text-[#ff6900] underline"
+                    : ""
+                }
+              >
+               Pro User 
+              </NavLink>
+            </a>
+          </li>
+         
           </ul>
         </div>
         {user ? (
