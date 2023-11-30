@@ -4,27 +4,29 @@ import SurveyCreation from '../Page/SurveyCreation/SurveyCreation';
 
 const Dashboard = () => {
   // TODO get isAdmin value from the database 
-  // const is Admin = true ;
+  const userRole = 'admin';
   return (
     <div className="min-h-screen bg-black flex font-Barlow">
       {/*dashboard  Sidebar */}
       <div className="w-64 bg-[#ff6900]  ml-5  pt-10 ">
         <h1 className="text-2xl font-extrabold mb-4 w-64 px-8 text-black ">Surveyor Dashboard</h1>
         <ul className="px-8 text-lg ">
-          <li className="mb-2 bg-white p-1 text-center font-semibold rounded-lg">
-          <NavLink
-                to="accescontrol"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? " hover:text-[#ff6900] underline"
-                    : ""
-                }
-              >
-              <i className="fa-solid fa-user-lock mr-2" style={{color:' #fab005' }}></i> Access Control
-              </NavLink>
-          </li>
+          {
+            userRole === "admin" ? <><li className="mb-2 bg-white p-1 text-center font-semibold rounded-lg">
+            <NavLink
+                  to="accesscontrol"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? " hover:text-[#ff6900] underline"
+                      : ""
+                  }
+                >
+                <i className="fa-solid fa-user-lock mr-2" style={{color:' #fab005' }}></i> Access Control
+                </NavLink>
+            </li></> :<></>
+          }
           <li className="mb-2 bg-white p-1 text-center font-semibold rounded-lg">
           <NavLink
                 to="surveycreation"
@@ -83,8 +85,10 @@ const Dashboard = () => {
         
         {/* Your main content goes here */}
         <h2 className="text-3xl font-bold text-[#ff6900] bg-white  p-8 mb-4 text-center">Welcome to the Surveyor Dashboard!</h2>
+      
         {/* Add your components, charts, or any other content here */}
         <Outlet></Outlet>
+        
       </div>
       </div>
     

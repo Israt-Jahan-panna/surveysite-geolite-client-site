@@ -36,21 +36,20 @@ const Footer = () => {
           </div>
           <div className="mb-8">
             <h4 className="text-2xl font-bold mb-4">Contact Info</h4>
-            <p>Jl. Raya Puputan No 142, Denpasar</p>
+           
             <p>(+62) 81 115 3568</p>
-            <p>support@domain.com</p>
+            <p>geolite@gamil.com</p>
             <p>Mon - Fri : 9:00 am - 5:00 pm</p>
           </div>
           <div className="mb-8">
             <h4 className="text-2xl font-bold mb-4">Make an Appointment</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt labor
+              To work without hassel.
             </p>
           </div>
           <div className="mb-8">
             <h4 className="text-2xl font-bold mb-4">Call Us Today</h4>
-            <p>(+62) 81 115 3568</p>
+            <p>+08****</p>
           </div>
         </div>
         <div className="flex items-center justify-center mt-8 mb-2">

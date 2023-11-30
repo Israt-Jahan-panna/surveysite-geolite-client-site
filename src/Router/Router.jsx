@@ -10,6 +10,10 @@ import SurveyDetails from "../Page/SurveyDetails/SurveyDetails";
 import Registrations from "../Page/Registrations/Registrations";
 import AboutUs from "../Page/AboutUs/AboutUs";
 import ContactUs from "../Page/ContactUs/ContactUs";
+import PrivateRoute from "./PrivateRoute";
+import AccessControl from "../Page/AccessControl/AccessControl";
+import Pricing from "../Page/Pricing/Pricing";
+import ProUser from "../Page/ProUser/ProUser";
 
 const router = createBrowserRouter([
   {
@@ -46,15 +50,28 @@ const router = createBrowserRouter([
         path: "/contactus",
         element: <ContactUs></ContactUs>,
       },
+      {
+        path:"/pricing",
+        element:<Pricing></Pricing>
+      },
+      {
+        path:"/prouser",
+        element:<ProUser></ProUser>
+      }
+      
     ],
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element:<PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
     children: [
       {
         path: "surveycreation",
         element: <SurveyCreation></SurveyCreation>,
+      },
+      {
+        path: "accesscontrol",
+        element: <AccessControl></AccessControl>,
       },
     ],
   },
