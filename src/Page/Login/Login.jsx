@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -63,26 +63,33 @@ const Login = () => {
       signInWithPopup(auth, provider)
         .then((userCredential) => {
           const user = userCredential.user;
-          
-  // stying in location and rediret to 
+  
+          // Set the default role for Google login to "user"
+          const defaultRole = "user";
+  
+          // Update the user's display name and role
+          updateProfile(user, { displayName: user.displayName, role: defaultRole });
+  
+          // Your existing logic here
           if (loading) {
             <progress className="progress w-56"></progress>;
           }
           if (location?.state) {
             navigate(location.state);
           } else {
-          
             navigate('/');
           }
-                // Create an object to send to your server
+  
+          // Create an object to send to your server
           const userData = {
             name: user.displayName,
             email: user.email,
+            role: defaultRole,
           };
   
           // Make a POST request to your server
           fetch(
-            "  https://jobi-server-site.vercel.app/users",
+            "http://localhost:4200/users",
             {
               method: "POST",
               headers: {

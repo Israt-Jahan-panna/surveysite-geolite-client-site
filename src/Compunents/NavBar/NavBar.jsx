@@ -76,22 +76,7 @@ const NavBar = () => {
             </a>
           </li>
             
-          <li>
-            <a className="text-lg  text-black hover:text-[#ff6900] " href="#">
-              <NavLink
-                to="/surveydetails"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? " hover:text-[#ff6900] underline"
-                    : ""
-                }
-              >
-               Survey Details
-              </NavLink>
-            </a>
-          </li>
+       
             
 		
 		
@@ -169,22 +154,7 @@ const NavBar = () => {
             </a>
           </li>
           
-          <li>
-            <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
-              <NavLink
-                to="/surveydetails"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? " hover:text-[#ff6900] underline"
-                    : ""
-                }
-              >
-              Survey Details
-              </NavLink>
-            </a>
-          </li>
+         
           
           <li>
             <a className="text-xl font-bold text-black hover:text-[#ff6900]" href="#">
@@ -229,7 +199,7 @@ const NavBar = () => {
           ">
             <img className="rounded-sm w-8 h-12" src={user.photoURL} alt="" />
             <p className="text-xs ">{user.displayName}</p>
-            <button onClick={handelSingOut} className=" mb-2  rounded-lg bg-gradient-to-tr bg-[#ff6900] p-3 lg:py-2 lg:px-6 font-sans text-xs font-bold uppercase text-white shadow-md   transition-all hover:shadow-lg   active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+            <button onClick={handelSingOut} className=" mb-2  rounded-lg bg-gradient-to-tr bg-[#ff6900] p-3 lg:py-2 lg:px-6  text-xs  uppercase text-black shadow-md   transition-all hover:shadow-lg   active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
               Sing Out
             </button>
           </div>
@@ -237,10 +207,10 @@ const NavBar = () => {
           <div className="navbar-end  gap-4 
           ">
             <Link to={"/registration"}>
-              <a className=" mb-2  rounded-lg bg-gradient-to-tr bg-[#ff6900] p-3 lg:py-2 lg:px-6 font-sans text-xs font-bold uppercase text-white shadow-md   transition-all hover:shadow-lg   active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Registration</a>
+              <a className=" mb-2  rounded-lg bg-gradient-to-tr bg-[#ff6900] p-3 lg:py-2 lg:px-6  text-xs  uppercase text-black shadow-md   transition-all hover:shadow-lg   active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Registration</a>
             </Link>
             <Link to={"/login"}>
-              <a className=" mb-2  rounded-lg bg-gradient-to-tr bg-[#ff6900] p-3 lg:py-2 lg:px-6 font-sans text-xs font-bold uppercase text-white shadow-md   transition-all hover:shadow-lg   active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Log In</a>
+              <a className=" mb-2  rounded-lg bg-gradient-to-tr bg-[#ff6900] p-3 lg:py-2 lg:px-6  text-xs  uppercase text-black shadow-md   transition-all hover:shadow-lg   active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Log In</a>
             </Link>
           </div>
         )}

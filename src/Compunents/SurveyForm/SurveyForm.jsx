@@ -1,68 +1,101 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const SurveyForm = () => {
-    const [surveyData, setSurveyData] = useState({
-        title: '',
-        description: '',
-        shortdescription: '',
-        likeCount: 0,
-        dislikeCount: 0,
-        likeClicked: false,
+  const [surveyData, setSurveyData] = useState({
+    title: '',
+    description: '',
+    shortdescription: '',
+    likeCount: 0,
+    dislikeCount: 0,
+    likeClicked: false,
+    dislikeClicked: false,
+    voting: null,
+    category: '',
+    imageUrl: '',
+    totalVoteCount: 0,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSurveyData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleVote = (voteType) => {
+    let voteCount = 0;
+    if (voteType === 'Like') {
+      setSurveyData((prevData) => ({
+        ...prevData,
+        likeCount: prevData.likeCount + 1,
         dislikeClicked: false,
-        votting: '',
-        category: '',
-        imageUrl: '',
-      });
-    
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setSurveyData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
-    
-      const handleVote = (voteType) => {
-        setSurveyData((prevData) => ({
-          ...prevData,
-          likeCount: voteType === 'Like' ? prevData.likeCount + 1 : prevData.likeCount,
-          dislikeCount: voteType === 'Dislike' ? prevData.dislikeCount + 1 : prevData.dislikeCount,
-          likeClicked: voteType === 'Like',
-          dislikeClicked: voteType === 'Dislike',
-          votting: voteType === 'Like' || voteType === 'Dislike' ? prevData.votting : '',
-        }));
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-    
-        // Assuming you have a backend API endpoint for survey creation
-        fetch('http://localhost:4200/survey', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ...surveyData,
-            timestamp: new Date().toISOString(),
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('Survey created successfully:', data);
-            // Handle any additional actions upon successful survey creation
-          })
-          .catch((error) => {
-            console.error('Error creating survey:', error);
-            // Handle errors
+        likeClicked: true,
+      }));
+    } else if (voteType === 'Dislike') {
+      setSurveyData((prevData) => ({
+        ...prevData,
+        dislikeCount: prevData.dislikeCount + 1,
+        likeClicked: false,
+        dislikeClicked: true,
+      }));
+    }else if (voteType === 'Yes') {
+      
+      setSurveyData((prevData) => ({
+        ...prevData,
+        totalVoteCount:prevData.voteCount + 1,
+        voting: 'Yes',
+      }));
+    } else if (voteType === 'No') {
+      
+      setSurveyData((prevData) => ({
+        ...prevData,
+        totalVoteCount: prevData.voteCount + 0 ,
+        voting: 'No',
+      }));
+    }
+  
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Assuming you have a backend API endpoint for survey creation
+    fetch('http://localhost:4200/survey', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...surveyData,
+        timestamp: new Date().toISOString(),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: 'Thank You!',
+            text: 'Survey Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Okay',
+          }).then(() => {
+            // Redirect to /surveys
+            window.location.href = '/surveys';
           });
-      };
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   return (
     <div className="max-w-2xl mx-auto mt-8 p-8 bg-[#d8a600] rounded shadow-md">
       <h2 className="text-2xl font-bold mb-4">Create a Survey</h2>
       <form onSubmit={handleSubmit}>
-      <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="category" className="block text-sm font-semibold text-gray-600">
             Category
           </label>
@@ -93,7 +126,7 @@ const SurveyForm = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="shortdescription" className="block text-sm font-semibold text-gray-600">
-           Short Description
+            Short Description
           </label>
           <textarea
             id="shortdescription"
@@ -117,7 +150,7 @@ const SurveyForm = () => {
             required
           ></textarea>
         </div>
-        
+
         <div className="mb-4">
           <label htmlFor="imageUrl" className="block text-sm font-semibold text-gray-600">
             Image URL
@@ -137,10 +170,10 @@ const SurveyForm = () => {
             <input
               type="radio"
               id="optionYes"
-              name="votting"
+              name="voting"
               value="Yes"
-              onChange={handleChange}
-              checked={surveyData.votting === 'Yes'}
+              onChange={() => handleVote('Yes')}
+              checked={surveyData.voting === 'Yes'}
               className="mr-2"
             />
             <label htmlFor="optionYes">Yes</label>
@@ -148,10 +181,10 @@ const SurveyForm = () => {
             <input
               type="radio"
               id="optionNo"
-              name="votting"
+              name="voting"
               value="No"
-              onChange={handleChange}
-              checked={surveyData.votting === 'No'}
+              onChange={() => handleVote('No')}
+              checked={surveyData.voting === 'No'}
               className="mr-2"
             />
             <label htmlFor="optionNo">No</label>
@@ -182,10 +215,11 @@ const SurveyForm = () => {
           </div>
         </div>
 
-        
-
-        <button type="submit" className="mb-2 bg-white p-1 text-center font-semibold rounded-lg relative ">
-        <i className="fa-solid fa-plus" style={{color:' #fab005' }}></i>  Create Survey
+        <button
+          type="submit"
+          className="mb-2 bg-white p-1 text-center font-semibold rounded-lg relative "
+        >
+          <i className="fa-solid fa-plus" style={{ color: ' #fab005' }}></i> Create Survey
         </button>
       </form>
     </div>

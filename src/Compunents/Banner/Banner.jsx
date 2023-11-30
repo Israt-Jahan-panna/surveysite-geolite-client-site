@@ -3,7 +3,7 @@ import React from "react";
 const Banner = () => {
   return (
     <div className="flex justify-between font-Barlow min-h-screen">
-      <div className="w-1/3 bg-black">
+      <div className="w-1/3 bg-[#ff6900]">
         <div className=" text-white relative lg:w-[500px]">
           <div className="container  py-10 text-center absolute lg:top-[100px] lg:left-20  bg-black ">
             <h2 className="lg:text-6xl font-bold mb-4">
