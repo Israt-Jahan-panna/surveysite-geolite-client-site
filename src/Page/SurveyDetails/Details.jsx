@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const Details = ({survey}) => {
  
@@ -239,6 +240,10 @@ const [comments, setComments] = useState([]);
         console.error('Error fetching comments:', error);
       });
   }, [_id]);
+  // become a pro user 
+  const handleBecomeProUser = () => {
+    
+  };
     return (
         <div className="max-w-[1600px] mx-4 py-4 lg:mx-10 font-Barlow bg-[#d8a600] px-10  m-9 rounded-2xl">
            <div className=" ">
@@ -328,7 +333,12 @@ const [comments, setComments] = useState([]);
         </button>
         </div>
         </form>
-        
+        {users?.role !== 'Pro User' && (
+           <Link to={"/pricing"}>
+           <button onClick={handleBecomeProUser} className="mb-2 bg-white p-1 text-center font-semibold rounded-lg relative">
+              Become Pro User
+            </button></Link> 
+          )}
       </div>
       
     </div>
