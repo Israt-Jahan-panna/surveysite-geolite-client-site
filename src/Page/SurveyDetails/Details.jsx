@@ -3,42 +3,32 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Details = ({survey}) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+ 
   const { user, loading } = useContext(AuthContext);
-    const [users, setUsers] = useState([]);
-    useEffect(() => {
-      fetch(`http://localhost:4200/users`)
-          .then(res => res.json())
-          .then(data => {
-            const currentuser= data.find((singleUser) => user?.email === singleUser.email )
-            // console.log(currentuser)
-            setUsers(currentuser);
-          })
-          
-  },[user]);
-  console.log(users);
-  // const [role , name ] = users || {};
-// console.log(users)
-    const handleAddComment = () => {
-        if(user && users){
-          if (role === "Pro User") {
-            Swal.fire({
-                title: 'Comment Added!',
-                text: 'Your comment has been added successfully.',
-                icon: 'success',
-                confirmButtonText: 'Okay',
-            });
-        } else {
-            Swal.fire({
-                title: 'Access Denied',
-                text: 'You do not have permission to add comments.',
-                icon: 'error',
-                confirmButtonText: 'Okay',
-            });
-        }
-        }
-    };
-    
+  const [users, setUsers] = useState();
+  
+  useEffect(() => {
+    fetch(`http://localhost:4200/users`)
+      .then(res => res.json())
+      .then(data => {
+        const currentUser = data.find(singleUser => user?.email === singleUser.email);
+        setUsers(currentUser);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  
+  }, [user]);
+  
+  useEffect(() => {
+    if (users) {
+      console.log(users);
+    }
+  }, [users]);
+  
+  console.log(users)
+ 
+   
     const [surveyData, setSurveyData] = useState({
         
         likeCount: 0,
@@ -49,7 +39,7 @@ const Details = ({survey}) => {
         totalVoteCount: 0,
         comments : '',
       });
-    const [comment, setComment] = useState('');
+    
     const {
         _id,
         title,
@@ -128,23 +118,16 @@ const Details = ({survey}) => {
       
     
     };
-   const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    const votingLike = Number(e.target.voting.value +1 );
-    console.log(typeof votingLike);
-    console.log(votingLike + likeCount)
-   const updateSurvey = {
-     newLike:votingLike + likeCount,
-    
-   }
-    fetch(`http://localhost:4200/survey/${_id}`, {
+    // yes no vote 
+    const handleYes = (id) => {
+       
+        
+      fetch(`http://localhost:4200/survey/yes/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(
-        updateSurvey),
+        
     })
     .then((res) => res.json())
     .then((data) => {
@@ -162,10 +145,100 @@ const Details = ({survey}) => {
     .catch((error) => {
         console.error('Error:', error);
     });
+    
+  
+  };
+
+  const handleNo = (id) => {
+    
+    fetch(`http://localhost:4200/survey/no/${id}`, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      
+  })
+  .then((res) => res.json())
+  .then((data) => {
+    
+      console.log(data);
+      if(data.modifiedCount > 0){
+        Swal.fire({
+          title: 'Update!',
+          text: 'Your servey vote is Added successfully.',
+          icon: 'success',
+          confirmButtonText: 'Okay',
+      });
+      }
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+  
+
 };
 
-    
+
+const handleAddComment = () => {
  
+
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const form = event.target;
+  const comments = form.comments.value;
+  
+  const handleAddComment = {
+comments,
+_id
+  };
+
+  fetch(`http://localhost:4200/survey/comments/${_id}`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({handleAddComment
+  }),
+})
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data.insertedId) {
+        Swal.fire({
+          title: 'Thank You!',
+          text: 'Comment Added Successfully',
+          icon: 'success',
+          confirmButtonText: 'Okay',
+        }).then(() => {
+          // Clear the comment input field
+          setSurveyData((prevData) => ({
+            ...prevData,
+            comments: '',
+          }));
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+};
+ 
+//  commetns fetch 
+const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    // Fetch comments for the given survey ID
+    fetch(`http://localhost:4200/survey/comments/${_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setComments(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching comments:', error);
+      });
+  }, [_id]);
     return (
         <div className="max-w-[1600px] mx-4 py-4 lg:mx-10 font-Barlow bg-[#d8a600] px-10  m-9 rounded-2xl">
            <div className=" ">
@@ -198,46 +271,42 @@ const Details = ({survey}) => {
             </button>
           </div>
         </div>
-        <form onSubmit={handleSubmit}> 
-        <div>
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-600">Voting Option</label>
-          <div className="flex items-center">
-            <input
-              type="radio"
-              id="optionYes"
-              name="voting"
-              value="Yes"
-              onChange={() => handleVote('Yes')}
-              checked={surveyData.voting === 'Yes'}
-              className="mr-2"
-            />
-            <label htmlFor="optionYes">Yes</label>
-            <input
-              type="radio"
-              id="optionNo"
-              name="voting"
-              value="No"
-              onChange={() => handleVote('No')}
-              checked={surveyData.voting === 'No'}
-              className="mr-2"
-            />
-            <label htmlFor="optionNo">No</label>
+          <label className="block text-sm font-semibold text-gray-600">Give Vote</label>
+          <div className="flex items-center gap-8">
+            <button
+              type="button"
+              onClick={() =>handleYes(_id)}
+              className={`mr-2 focus:outline-none ${
+                surveyData.likeClicked ? 'text-blue-500' : 'text-black'
+              }`}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              onClick={() => handleNo(_id)}
+              className={`focus:outline-none ${
+                surveyData.dislikeClicked ? 'text-blue-500' : 'text-black'
+              }`}
+            >
+              No
+            </button>
           </div>
         </div>
-
-        
-        </div>
-
-        {/* Allow pro users to add comments */}
-       
-        <button
-          type="submit"
-          className="mb-2 bg-white p-1 text-center font-semibold rounded-lg relative "
-        >
-          <i className="fa-solid fa-plus" style={{ color: ' #fab005' }}></i> Submit
-        </button>
-        </form>
+        <div className="my-3 ">
+      <h2 className="text-sm font-semibold text-gray-600">All Comments</h2>
+      <ul>
+        {comments.map((comment) => (
+          <li key={comment._id}>
+            {comment.handleAddComment.comments}
+          </li>
+        ))}
+      </ul>
+      
+    </div>
+        <form onSubmit={handleSubmit}> 
+      
         <div className="mb-4 w-1/2" >
           <label htmlFor="shortdescription" className="block  text-sm font-semibold text-gray-600">
             Comments Here 
@@ -258,7 +327,10 @@ const Details = ({survey}) => {
           <i className="fa-solid fa-plus" style={{ color: ' #fab005' }}></i> Add Comments
         </button>
         </div>
+        </form>
+        
       </div>
+      
     </div>
         
     );

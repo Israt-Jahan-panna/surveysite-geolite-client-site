@@ -3,8 +3,10 @@ import { FaTrashAlt, FaUsers } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const AccessControl = () => {
+  
   const [users, setUsers] = useState([]);
-console.log(users);
+  const [selectedRole, setSelectedRole] = useState(null);
+
   const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:4200/users');
@@ -22,8 +24,10 @@ console.log(users);
     fetchData();
   }, []); 
 
-  const handleMakeAdmin = (user) => {
-    fetch(`http://localhost:4200/users/admin/${user._id}`, {
+  const handleAssignRole = (user, role) => {
+    const endpoint = role === 'admin' ? 'admin' : 'surveyor';
+
+    fetch(`http://localhost:4200/users/${endpoint}/${user._id}`, {
       method: 'PATCH',
     })
       .then((res) => {
@@ -35,17 +39,18 @@ console.log(users);
       .then((data) => {
         if (data.modifiedCount > 0) {
           fetchData(); // Refetch data after modification
+          setSelectedRole(null); // Reset selected role after assignment
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: `${user.name} is an Admin Now!`,
+            title: `${user.name} is a ${role === 'admin' ? 'Admin' : 'Surveyor'} Now!`,
             showConfirmButton: false,
             timer: 1500,
           });
         }
       })
       .catch((error) => {
-        console.error('Error making admin:', error);
+        console.error(`Error making ${role}:`, error);
       });
   };
 
@@ -88,54 +93,84 @@ console.log(users);
 
   return (
     <div className="bg-white">
-      <div className="flex justify-evenly my-4">
-        <h2 className="text-3xl">All Users</h2>
-        <h2 className="text-3xl">Total Users: {users.length}</h2>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user._id}>
-                <th>{index + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  {user.role === 'admin' ? (
-                    'Admin'
-                  ) : (
-                    <button
-                      onClick={() => handleMakeAdmin(user)}
-                      className="btn btn-lg bg-orange-500"
-                    >
-                      <FaUsers className="text-white text-2xl"></FaUsers>
-                    </button>
-                  )}
-                </td>
-                <td>
-                  <button
-                    onClick={() => handleDeleteUser(user)}
-                    className="btn btn-ghost btn-lg"
-                  >
-                    <FaTrashAlt className="text-red-600"></FaTrashAlt>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="flex justify-evenly my-4">
+      <h2 className="text-3xl">All Users</h2>
+      <h2 className="text-3xl">Total Users: {users.length}</h2>
     </div>
+    <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
+        {/* head */}
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={user._id}>
+              <th>{index + 1}</th>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                {user.role === 'admin' ? (
+                  <>
+                    <span>Admin</span>
+                    <button
+                      onClick={() => handleAssignRole(user, 'surveyor')}
+                      className="btn btn-xs mx-2 bg-orange-500"
+                      disabled={selectedRole === 'surveyor'}
+                    >
+                      Make Surveyor
+                    </button>
+                  </>
+                ) : user.role === 'surveyor' ? (
+                  <>
+                    <span>Surveyor</span>
+                    <button
+                      onClick={() => handleAssignRole(user, 'admin')}
+                      className="btn btn-xs mx-2 bg-orange-500"
+                      disabled={selectedRole === 'admin'}
+                    >
+                      Make Admin
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => handleAssignRole(user, 'admin')}
+                      className="btn btn-xs bg-orange-500"
+                      disabled={selectedRole === 'admin'}
+                    >
+                      Make Admin
+                    </button>
+                    <button
+                      onClick={() => handleAssignRole(user, 'surveyor')}
+                      className="btn btn-xs mx-2 bg-orange-500"
+                      disabled={selectedRole === 'surveyor'}
+                    >
+                      Make Surveyor
+                    </button>
+                  </>
+                )}
+              </td>
+              <td>
+                <button
+                  onClick={() => handleDeleteUser(user)}
+                  className="btn btn-ghost mx-2 btn-xs"
+                >
+                  <FaTrashAlt className="text-red-600"></FaTrashAlt>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
   );
 };
 
