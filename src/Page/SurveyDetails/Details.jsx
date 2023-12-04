@@ -1,8 +1,44 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Details = ({survey}) => {
-    const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const { user, loading } = useContext(AuthContext);
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+      fetch(`http://localhost:4200/users`)
+          .then(res => res.json())
+          .then(data => {
+            const currentuser= data.find((singleUser) => user?.email === singleUser.email )
+            // console.log(currentuser)
+            setUsers(currentuser);
+          })
+          
+  },[user]);
+  console.log(users);
+  // const [role , name ] = users || {};
+// console.log(users)
+    const handleAddComment = () => {
+        if(user && users){
+          if (role === "Pro User") {
+            Swal.fire({
+                title: 'Comment Added!',
+                text: 'Your comment has been added successfully.',
+                icon: 'success',
+                confirmButtonText: 'Okay',
+            });
+        } else {
+            Swal.fire({
+                title: 'Access Denied',
+                text: 'You do not have permission to add comments.',
+                icon: 'error',
+                confirmButtonText: 'Okay',
+            });
+        }
+        }
+    };
+    
     const [surveyData, setSurveyData] = useState({
         
         likeCount: 0,
@@ -26,6 +62,7 @@ const Details = ({survey}) => {
         likeCount,
         dislikeCount,
       } = survey || {};
+
       const handleChange = (e) => {
         const { name, value } = e.target;
         setSurveyData((prevData) => ({
@@ -33,76 +70,100 @@ const Details = ({survey}) => {
           [name]: value,
         }));
       };
-      const handleVote = (voteType) => {
+      const handleLike = (id) => {
        
-        if (voteType === 'Like') {
-          setSurveyData((prevData) => ({
-            ...prevData,
-            likeCount: prevData.likeCount + 1,
-            dislikeClicked: false,
-            likeClicked: true,
-          }));
-        } else if (voteType === 'Dislike') {
-          setSurveyData((prevData) => ({
-            ...prevData,
-            dislikeCount: prevData.dislikeCount + 1,
-            likeClicked: false,
-            dislikeClicked: true,
-          }));
-        }else if (voteType === 'Yes') {
+        
+          fetch(`http://localhost:4200/survey/like/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            
+        })
+        .then((res) => res.json())
+        .then((data) => {
           
-          setSurveyData((prevData) => ({
-            ...prevData,
-            totalVoteCount:prevData.voteCount + 1,
-            voting: 'Yes',
-          }));
-        } else if (voteType === 'No') {
-          
-          setSurveyData((prevData) => ({
-            ...prevData,
-            totalVoteCount: prevData.voteCount + 0 ,
-            voting: 'No',
-          }));
-        }
+            console.log(data);
+            if(data.modifiedCount > 0){
+              Swal.fire({
+                title: 'Update!',
+                text: 'Your servey vote is Added successfully.',
+                icon: 'success',
+                confirmButtonText: 'Okay',
+            });
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+        
       
       };
-      const handleSubmit = (e) => {
-        e.preventDefault();
+
+      const handleDislike = (id) => {
+        
+        fetch(`http://localhost:4200/survey/dislike/${id}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        
+          console.log(data);
+          if(data.modifiedCount > 0){
+            Swal.fire({
+              title: 'Update!',
+              text: 'Your servey vote is Added successfully.',
+              icon: 'success',
+              confirmButtonText: 'Okay',
+          });
+          }
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+      
     
-        // // Assuming you have a backend API endpoint for survey creation
-        // fetch('', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify({
-        //     ...surveyData,
-        //     timestamp: new Date().toISOString(),
-        //   }),
-        // })
-        //   .then((res) => res.json())
-        //   .then((data) => {
-        //     console.log(data);
-        //     if (data.insertedId) {
-        //       Swal.fire({
-        //         title: 'Thank You!',
-        //         text: 'Survey Added Successfully',
-        //         icon: 'success',
-        //         confirmButtonText: 'Okay',
-        //       }).then(() => {
-        //         // Redirect to /surveys
-        //         window.location.href = '/surveys';
-        //       });
-        //     }
-        //   })
-        //   .catch((error) => {
-        //     console.error('Error:', error);
-        //   });
-      };
+    };
+   const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    const votingLike = Number(e.target.voting.value +1 );
+    console.log(typeof votingLike);
+    console.log(votingLike + likeCount)
+   const updateSurvey = {
+     newLike:votingLike + likeCount,
     
-      const handleAddComment = () => {
-        // Implement logic to handle adding comments
-      };
+   }
+    fetch(`http://localhost:4200/survey/${_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+        updateSurvey),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      
+        console.log(data);
+        if(data.modifiedCount > 0){
+          Swal.fire({
+            title: 'Update!',
+            text: 'Your servey vote is Added successfully.',
+            icon: 'success',
+            confirmButtonText: 'Okay',
+        });
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+};
+
     
  
     return (
@@ -113,7 +174,30 @@ const Details = ({survey}) => {
         <h3>{category}</h3>
         <h3 className="text-xl font-semibold h-12">{title}</h3>
         <p className="text-gray-700">{description}</p>
-
+        <p className="text-gray-700">{likeCount}</p>
+        <div className="mb-4">
+          <label className="block text-sm font-semibold text-gray-600">Like or Dislike</label>
+          <div className="flex items-center gap-8">
+            <button
+              type="button"
+              onClick={() =>handleLike(_id)}
+              className={`mr-2 focus:outline-none ${
+                surveyData.likeClicked ? 'text-blue-500' : 'text-black'
+              }`}
+            >
+              <i className="fa-solid fa-thumbs-up"></i>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDislike(_id)}
+              className={`focus:outline-none ${
+                surveyData.dislikeClicked ? 'text-blue-500' : 'text-black'
+              }`}
+            >
+              <i className="fa-solid fa-thumbs-down"></i>
+            </button>
+          </div>
+        </div>
         <form onSubmit={handleSubmit}> 
         <div>
         <div className="mb-4">
@@ -129,7 +213,6 @@ const Details = ({survey}) => {
               className="mr-2"
             />
             <label htmlFor="optionYes">Yes</label>
-
             <input
               type="radio"
               id="optionNo"
@@ -143,33 +226,19 @@ const Details = ({survey}) => {
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-600">Like or Dislike</label>
-          <div className="flex items-center gap-8">
-            <button
-              type="button"
-              onClick={() => handleVote('Like')}
-              className={`mr-2 focus:outline-none ${
-                surveyData.likeClicked ? 'text-blue-500' : 'text-black'
-              }`}
-            >
-              <i className="fa-solid fa-thumbs-up"></i>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleVote('Dislike')}
-              className={`focus:outline-none ${
-                surveyData.dislikeClicked ? 'text-blue-500' : 'text-black'
-              }`}
-            >
-              <i className="fa-solid fa-thumbs-down"></i>
-            </button>
-          </div>
-        </div>
+        
         </div>
 
         {/* Allow pro users to add comments */}
-        <div className="mb-4">
+       
+        <button
+          type="submit"
+          className="mb-2 bg-white p-1 text-center font-semibold rounded-lg relative "
+        >
+          <i className="fa-solid fa-plus" style={{ color: ' #fab005' }}></i> Submit
+        </button>
+        </form>
+        <div className="mb-4 w-1/2" >
           <label htmlFor="shortdescription" className="block  text-sm font-semibold text-gray-600">
             Comments Here 
           </label>
@@ -179,17 +248,16 @@ const Details = ({survey}) => {
             value={surveyData.comments}
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
-            required
+          
           ></textarea>
-        </div>
-        <button
+          <button onClick={handleAddComment}
           type="submit"
+          disabled={users?.role !== "Pro User"}
           className="mb-2 bg-white p-1 text-center font-semibold rounded-lg relative "
         >
-          <i className="fa-solid fa-plus" style={{ color: ' #fab005' }}></i> Submit
+          <i className="fa-solid fa-plus" style={{ color: ' #fab005' }}></i> Add Comments
         </button>
-        </form>
-        
+        </div>
       </div>
     </div>
         

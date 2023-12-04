@@ -25,7 +25,7 @@ const SurveyForm = () => {
   };
 
   const handleVote = (voteType) => {
-    let voteCount = 0;
+   
     if (voteType === 'Like') {
       setSurveyData((prevData) => ({
         ...prevData,
@@ -61,7 +61,7 @@ const SurveyForm = () => {
     e.preventDefault();
 
     // Assuming you have a backend API endpoint for survey creation
-    fetch('https://geolite-server-site.vercel.app/survey', {
+    fetch('http://localhost:4200/survey', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

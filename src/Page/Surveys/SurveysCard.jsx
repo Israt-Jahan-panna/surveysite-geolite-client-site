@@ -12,8 +12,9 @@ const SurveysCard = ({ survey }) => {
     voting,
     likeCount,
     dislikeCount,
+    totalVoteCount
   } = survey || {};
-  console.log(survey);
+  // console.log(survey);
   return (
     <div className="flex flex-col bg-white rounded-md overflow-hidden shadow-md font-Barlo ">
       <img src={imageUrl} alt={title} className="object-cover h-48 w-full" />
@@ -28,7 +29,7 @@ const SurveysCard = ({ survey }) => {
           </button>
           </Link>
           
-          <h3> Vote {voting}</h3>
+          <h3> Vote {totalVoteCount}</h3>
           <h3>
             <i
               className="fa-solid fa-thumbs-up mr-1"

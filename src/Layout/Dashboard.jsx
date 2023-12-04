@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import SurveyCreation from '../Page/SurveyCreation/SurveyCreation';
+import { AuthContext } from '../AuthProvider/AuthProvider';
+import useAdmin from '../hooks/useAdmin';
+
 
 const Dashboard = () => {
   // TODO get isAdmin value from the database 
-  const userRole = 'admin';
+  const { user, loading } = useContext(AuthContext);
+  console.log(user)
+  const [isAdmin] = useAdmin();
+ console.log(isAdmin);
   return (
     <div className="min-h-screen bg-black flex font-Barlow">
       {/*dashboard  Sidebar */}
@@ -12,7 +17,8 @@ const Dashboard = () => {
         <h1 className="text-2xl font-extrabold mb-4 w-64 px-8 text-black ">Surveyor Dashboard</h1>
         <ul className="px-8 text-lg ">
           {
-            userRole === "admin" ? <><li className="mb-2 bg-white p-1 text-center font-semibold rounded-lg">
+            isAdmin ? <>
+            <li className="mb-2 bg-white p-1 text-center font-semibold rounded-lg">
             <NavLink
                   to="accesscontrol"
                   className={({ isActive, isPending }) =>

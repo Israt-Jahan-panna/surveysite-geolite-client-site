@@ -6,11 +6,11 @@ const Surveys = () => {
     const [surveys, setSurveys] = useState([]);
 
   useEffect(() => {
-    fetch("https://geolite-server-site.vercel.app/survey")
+    fetch("http://localhost:4200/survey")
       .then((res) => res.json())
       .then((data) => setSurveys(data));
   });
-  console.log(surveys);
+  // console.log(surveys);
     return (
 
         <div>

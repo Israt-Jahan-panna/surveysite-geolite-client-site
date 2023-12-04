@@ -14,6 +14,7 @@ import PrivateRoute from "./PrivateRoute";
 import AccessControl from "../Page/AccessControl/AccessControl";
 import Pricing from "../Page/Pricing/Pricing";
 import ProUser from "../Page/ProUser/ProUser";
+import AdminRoute from "./AdminRoute/AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
       },
       {
         path: "accesscontrol",
-        element: <AccessControl></AccessControl>,
+       element:<AdminRoute><AccessControl></AccessControl></AdminRoute>,
       },
     ],
   },
