@@ -56,7 +56,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
               const users = { email, name, role: defaultRole };
   
               // Making a POST request to your server to add the user
-              fetch("http://localhost:4200/users", {
+              fetch("https://geolite-server-site.vercel.app/users", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

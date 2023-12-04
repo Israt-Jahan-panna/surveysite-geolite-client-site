@@ -7,7 +7,7 @@ const LatestProjects = () => {
   useEffect(() => {
     const fetchSurveys = async () => {
       try {
-        const response = await fetch("http://localhost:4200/survey");
+        const response = await fetch("https://geolite-server-site.vercel.app/survey");
         const data = await response.json();
         
         // Sort surveys by timestamp in descending order

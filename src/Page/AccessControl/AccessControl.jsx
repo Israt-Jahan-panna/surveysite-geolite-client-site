@@ -9,7 +9,7 @@ const AccessControl = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:4200/users');
+      const response = await fetch('https://geolite-server-site.vercel.app/users');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -27,7 +27,7 @@ const AccessControl = () => {
   const handleAssignRole = (user, role) => {
     const endpoint = role === 'admin' ? 'admin' : 'surveyor';
 
-    fetch(`http://localhost:4200/users/${endpoint}/${user._id}`, {
+    fetch(`https://geolite-server-site.vercel.app/users/${endpoint}/${user._id}`, {
       method: 'PATCH',
     })
       .then((res) => {
@@ -65,7 +65,7 @@ const AccessControl = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4200/users/${user._id}`, {
+        fetch(`https://geolite-server-site.vercel.app/users/${user._id}`, {
           method: 'DELETE',
         })
           .then((res) => {

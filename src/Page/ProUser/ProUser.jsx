@@ -8,7 +8,7 @@ const ProUser = () => {
   const [users, setUsers] = useState();
   
   useEffect(() => {
-    fetch(`http://localhost:4200/users`)
+    fetch(`https://geolite-server-site.vercel.app/users`)
       .then(res => res.json())
       .then(data => {
         const currentUser = data.find(singleUser => user?.email === singleUser.email);
@@ -30,7 +30,13 @@ const ProUser = () => {
   const handlePayment = (event) => {
     event.preventDefault();
     const form = event.target;
-  
+    if (!user) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops... ",
+            text: "You Have to login fist",
+          });
+      }
     // Log the user ID to check if it's valid
     console.log("User ID:", users?._id);
   
@@ -39,7 +45,7 @@ const ProUser = () => {
       return;
     }
   
-    fetch(`http://localhost:4200/users/${users._id}`, {
+    fetch(`https://geolite-server-site.vercel.app/users/${users._id}`, {
       method: "PATCH", // Use PATCH method for updating
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +88,9 @@ const ProUser = () => {
         <div className="flex items-center justify-between mb-4">
           <span className="text-lg font-bold">$19.99/month</span>
           <form onSubmit={handlePayment}>
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            <button type="submit"
+            disabled={users?.role == "admin"}
+            className="bg-blue-500 text-white px-4 py-2 rounded">
               Upgrade
             </button>
           </form>

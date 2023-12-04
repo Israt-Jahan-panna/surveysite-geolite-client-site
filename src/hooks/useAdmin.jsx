@@ -11,7 +11,7 @@ const useAdmin = () => {
         enabled: !loading && !!user?.email,
         queryFn: async () => {
             if (user?.email) {
-                const res = await axios.get(`http://localhost:4200/users/admin/${ user.email }`);
+                const res = await axios.get(`https://geolite-server-site.vercel.app/users/admin/${ user.email }`);
                 console.log(res);
                 return res.data.admin;
             }

@@ -10,7 +10,7 @@ const useSurveyor = () => {
         enabled: !loading && !!user?.email,
         queryFn: async () => {
             if (user?.email) {
-                const res = await axios.get(`http://localhost:4200/users/surveyor/${user.email}`);
+                const res = await axios.get(`https://geolite-server-site.vercel.app/users/surveyor/${user.email}`);
                 console.log(res);
                 return res.data.surveyor; // Use lower case "surveyor" here
             }

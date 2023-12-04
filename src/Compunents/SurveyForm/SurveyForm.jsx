@@ -61,7 +61,7 @@ const SurveyForm = () => {
     e.preventDefault();
 
     // Assuming you have a backend API endpoint for survey creation
-    fetch('http://localhost:4200/survey', {
+    fetch('https://geolite-server-site.vercel.app/survey', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
