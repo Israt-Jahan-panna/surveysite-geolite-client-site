@@ -14,11 +14,6 @@ Here Is 5 Feature  and functionalitis of this project:
 
 
 
-## [ github seversite ](https://github.com/programming-hero-web-course1/b8a12-server-side-Israt-Jahan-panna.git)
-## [ github clintsite link ]( https://github.com/programming-hero-web-course1/b8a12-client-side-Israt-Jahan-panna.git)
-
-
-
 
 
 ## [ Client Side Private repo:](https://classroom.github.com/a/dn3l6UtS)(https://classroom.github.com/a/dn3l6UtS)
